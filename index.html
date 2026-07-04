@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ada's Ring Companion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --day-top: #4f7fd0;
+  --day-bottom: #68a3f2;
+
+  --night-top: #0f1630;
+  --night-bottom: #151d3a;
+
+  --day-text: #04121f;
+  --night-text: #e9f0ff;
+
+  --gold-light: #ffe27a;
+  --gold-main: #d6a900;
+  --gold-dark: #8f6b00;
+}
+
+/* ===== Global ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand", sans-serif;
+  background: linear-gradient(180deg, var(--day-top), var(--day-bottom));
+  transition: background 0.8s ease;
+}
+
+.wrapper {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+/* ===== Ringkreis ===== */
+
+.ringcircle {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: calc(50% - 80px);
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: ring-spin 55s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ring-spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border: 5px solid var(--gold-main);
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0.88;
+  box-shadow:
+    0 0 0 1px var(--gold-dark),
+    inset 0 0 0 1px var(--gold-light),
+    0 0 10px rgba(255, 226, 122, 0.55);
+}
+
+.ring::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 7px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.65);
+  transform: rotate(-25deg);
+}
+
+.ring:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg)   translate(140px); }
+.ring:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg)  translate(140px); }
+.ring:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg)  translate(140px); }
+.ring:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg) translate(140px); }
+.ring:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg) translate(140px); }
+.ring:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg) translate(140px); }
+.ring:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg) translate(140px); }
+.ring:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg) translate(140px); }
+
+/* ===== Companion ===== */
+
+#companion {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  cursor: pointer;
+  transform-origin: center bottom;
+  animation: breathe 3s ease-in-out infinite;
+  z-index: 20;
+  margin-top: 40px;
+}
+
+#companion-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: filter 0.4s ease;
+}
+
+/*
+  Bild-Hinweis:
+  Lege dein transparentes Gollum-/Ringwesen-Bild einfach als "gollum.png"
+  in denselben Ordner wie diese index.html.
+  Gute Maße: quadratisch, z.B. 512x512 px oder 256x256 px, transparenter Hintergrund.
+  Der Code skaliert das Bild automatisch in den 150x150-Bereich.
+*/
+
+.companion-shadow {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 6px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(4px);
+  z-index: -1;
+}
+
+/* Animations */
+@keyframes breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-4px) scale(1); }
+}
+
+.sparkle {
+  position: absolute;
+  top: 8px;
+  right: -8px;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sparkle::before,
+.sparkle::after {
+  content: "";
+  position: absolute;
+  background: white;
+}
+
+.sparkle::before { width: 12px; height: 2px; top: 5px; left: 0; }
+.sparkle::after  { width: 2px; height: 12px; top: 0; left: 5px; }
+
+@keyframes sparkle-pop {
+  0%   { opacity: 0; transform: translateY(0) scale(0.4); }
+  10%  { opacity: 1; }
+  70%  { opacity: 1; transform: translateY(-8px) scale(1); }
+  100% { opacity: 0; transform: translateY(-14px) scale(0.3); }
+}
+
+/* Idle */
+@keyframes idle-hop {
+  0% { transform: translateY(0); }
+  30%{ transform: translateY(-14px); }
+  60%{ transform: translateY(4px); }
+  100%{ transform: translateY(0); }
+}
+@keyframes idle-wiggle {
+  0%,100%{ transform: rotate(0deg); }
+  25%{ transform: rotate(-4deg); }
+  50%{ transform: rotate(4deg); }
+  75%{ transform: rotate(-3deg); }
+}
+@keyframes idle-tilt {
+  0%{ transform: rotate(0deg); }
+  50%{ transform: rotate(-8deg); }
+  100%{ transform: rotate(0deg); }
+}
+
+.idle-hop    { animation: idle-hop 0.65s ease-out 1; }
+.idle-wiggle { animation: idle-wiggle 0.55s ease-out 1; }
+.idle-tilt   { animation: idle-tilt 0.55s ease-out 1; }
+
+/* Click */
+@keyframes click-bounce {
+  0%{ transform: translateY(0) scale(1); }
+  30%{ transform: translateY(-16px) scale(1.05); }
+  60%{ transform: translateY(4px) scale(0.95); }
+  100%{ transform: translateY(0) scale(1); }
+}
+@keyframes click-shake {
+  0%,100%{ transform: translateX(0) scale(1); }
+  20%{ transform: translateX(-6px); }
+  40%{ transform: translateX(6px); }
+  60%{ transform: translateX(-5px); }
+  80%{ transform: translateX(5px); }
+}
+@keyframes click-pop {
+  0%{ transform: scale(1); }
+  40%{ transform: scale(1.12); }
+  100%{ transform: scale(1); }
+}
+
+.click-bounce { animation: click-bounce 0.45s ease-out 1 !important; }
+.click-shake  { animation: click-shake 0.4s ease-out 1 !important; }
+.click-pop    { animation: click-pop 0.35s ease-out 1 !important; }
+
+.sparkle-on { animation: sparkle-pop 0.7s ease-out 1; }
+
+/* ===== Text ===== */
+
+#message {
+  margin-top: 100px;
+  max-width: 90vw;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--day-text);
+  transition: color 0.4s ease;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.25);
+  position: relative;
+  z-index: 30;
+}
+
+.ada-name { display: inline-block; }
+.ada-anim { animation: ada-pulse 0.5s ease-out 1; }
+@keyframes ada-pulse {
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.07); }
+  100%{ transform: scale(1); }
+}
+
+/* existential-mode */
+.existential-message { animation: existential-wiggle 1.4s ease-in-out infinite; }
+@keyframes existential-wiggle {
+  0%,100%{ transform: translateX(0); }
+  50%{ transform: translateX(2px); }
+}
+
+body.existential {
+  background: linear-gradient(180deg, #141425, #232348) !important;
+}
+
+body.existential #companion-img {
+  filter: hue-rotate(15deg) brightness(0.85);
+}
+
+/* ===== Night Mode ===== */
+
+body.night {
+  background: linear-gradient(180deg, var(--night-top), var(--night-bottom));
+}
+
+body.night #message {
+  color: var(--night-text);
+}
+
+/* ===== Buttons ===== */
+
+.toggle,
+.gandalf-button {
+  position: fixed;
+  background: #ffffffaa;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  user-select: none;
+}
+
+.toggle {
+  bottom: 20px;
+  right: 20px;
+}
+
+.gandalf-button {
+  bottom: 20px;
+  left: 20px;
+}
+
+body.night .toggle,
+body.night .gandalf-button {
+  background: #00000055;
+  color: #f0f3ff;
+}
+
+/* ===== Gandalf-Modus / Video-Overlay ===== */
+
+#gandalf-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+
+#gandalf-overlay.active {
+  display: flex;
+}
+
+#gandalf-video,
+#gandalf-gif {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: none;
+}
+
+#gandalf-video.active,
+#gandalf-gif.active {
+  display: block;
+}
+
+#gandalf-close {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 5010;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.78);
+  color: #111;
+}
+
+#gandalf-note {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 5010;
+  max-width: 90vw;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.58);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="gandalf-button" id="gandalf-button">Gandalf-Modus</div>
+<div class="toggle" id="toggle-button">Tagmodus</div>
+
+<div id="gandalf-overlay">
+  <button id="gandalf-close">✕</button>
+
+  <!--
+    Später hier deine Dateien einfügen:
+    - Für Video: Datei als "gandalf-mode.mp4" in denselben Ordner legen.
+    - Für GIF: Datei als "gandalf-mode.gif" in denselben Ordner legen.
+    - Für Musik: Datei als "gandalf-music.mp3" in denselben Ordner legen.
+
+    Wichtig:
+    Das Video ist hier bewusst stummgeschaltet, damit die Musik immer über
+    die eigene Audiodatei läuft und nichts doppelt abgespielt wird.
+  -->
+  <video id="gandalf-video" src="gandalf-mode.mp4" loop playsinline muted></video>
+  <img id="gandalf-gif" src="gandalf-mode.gif" alt="Gandalf-Modus">
+  <audio id="gandalf-audio" src="gandalf-music.mp3" loop preload="auto"></audio>
+  <div id="gandalf-note">Lege später gandalf-mode.mp4/gif und gandalf-music.mp3 in den Projektordner.</div>
+</div>
+
+<div class="wrapper">
+
+  <!-- Goldringkreis -->
+  <div class="ringcircle">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+
+  <!-- Companion -->
+  <div id="companion">
+    <img id="companion-img" src="gollum.png" alt="Ada's Ring Companion">
+    <div class="companion-shadow"></div>
+    <div class="sparkle"></div>
+  </div>
+
+  <!-- Text -->
+  <div id="message"></div>
+</div>
+
+<script>
+/* ===== Sprüche ===== */
+
+const motivating = [
+  { text: "<span class='ada-name'>Ada</span>, du trägst heute nicht die Last der ganzen Welt. Höchstens einen kleinen Ring.", uses: 0 },
+  { text: "Ein kleiner Schritt reicht. Auch wenn der Weg gerade nach Mordor aussieht.", uses: 0 },
+  { text: "<span class='ada-name'>Ada</span>, du bist stärker, als du gerade glaubst.", uses: 0 },
+  { text: "Pausen sind erlaubt. Selbst epische Reisen haben Lagerfeuer-Momente.", uses: 0 },
+  { text: "Heute muss nicht perfekt werden. Heute darf einfach geschafft werden.", uses: 0 },
+  { text: "Wenn alles düster wirkt: Du bist immer noch unterwegs. Das zählt.", uses: 0 },
+  { text: "Du musst nicht alles alleine tragen, <span class='ada-name'>Ada</span>.", uses: 0 },
+  { text: "Auch kleine Leute schaffen große Dinge. Und kleine To-dos zählen auch.", uses: 0 },
+  { text: "Einmal tief durchatmen. Dann weiter. Ganz heldenhaft, nur mit mehr Snacks.", uses: 0 },
+  { text: "Du bist nicht verloren. Du bist nur gerade in Kapitel 2 von einer längeren Quest.", uses: 0 },
+  { text: "Möge dein Kaffee stark und dein Tag kurz sein.", uses: 0 },
+  { text: "Wenn der Plan nicht funktioniert, ändern wir den Plan. Nicht die ganze Quest.", uses: 0 },
+  { text: "Kleine Schritte sind besser als dramatisch in den Nebel zu starren.", uses: 0 },
+  { text: "Heute überlebt? Reicht. Wirklich.", uses: 0 },
+  { text: "Du brauchst keinen epischen Soundtrack, um gerade gut genug zu sein.", uses: 0 },
+  { text: "<span class='ada-name'>Ada</span>, du machst das besser, als dein Kopf dir gerade erzählt.", uses: 0 },
+  { text: "Manchmal ist Atmen produktiv genug. Sogar in Mittelerde.", uses: 0 },
+  { text: "Du bist keine Maschine. Du bist eher eine kleine Legende mit WLAN.", uses: 0 },
+  { text: "Auch wenn heute alles nach Orks aussieht: Du musst nur den nächsten Schritt schaffen.", uses: 0 },
+  { text: "Du hast schon andere schwere Tage geschafft. Dieser hier kriegt dich nicht einfach so.", uses: 0 }
+];
+
+const funfacts = [
+  { text: "Fun Fact: Ringe sind rund. Das ist verdächtig praktisch für dramatische Symbolik.", uses: 0 },
+  { text: "Fun Fact: Hobbits würden wahrscheinlich sehr gute Snack-Manager abgeben.", uses: 0 },
+  { text: "Fun Fact: Ein Zauberer kommt nie zu spät. Deadlines aber schon.", uses: 0 },
+  { text: "Fun Fact: Manche Quests starten nur, weil jemand ein Schmuckstück nicht liegen lassen konnte.", uses: 0 },
+  { text: "Fun Fact: Karten sehen immer einfacher aus, bis man selbst laufen muss.", uses: 0 },
+  { text: "Fun Fact: Epische Reisen bestehen zu 80% aus Gehen und zu 20% aus schlechten Entscheidungen.", uses: 0 },
+  { text: "Fun Fact: Wer Proviant einpackt, ist der eigentliche Held jeder Geschichte.", uses: 0 },
+  { text: "Fun Fact: Ein Ringkreis im Hintergrund ist günstiger als echte Spezialeffekte.", uses: 0 },
+  { text: "Fun Fact: Dunkle Türme haben selten gute Innenarchitektur.", uses: 0 },
+  { text: "Fun Fact: Kleine Gefährten sind oft zuverlässiger als große Reden.", uses: 0 },
+  { text: "Fun Fact: Jeder braucht einen Sam. Oder zumindest jemanden, der Snacks erinnert.", uses: 0 },
+  { text: "Fun Fact: Drachen schlafen angeblich gern auf Gold. Relatable.", uses: 0 }
+];
+
+const existential = [
+  { text: "Letztlich ist alles vergänglich. Aber Snacks sind jetzt.", uses: 0 },
+  { text: "Wir sind nur kleine Wesen auf einer großen Karte. Aber <span class='ada-name'>Ada</span> macht das ästhetisch.", uses: 0 },
+  { text: "Vielleicht ist der Weg sinnlos. Vielleicht glitzert unterwegs aber ein Ring.", uses: 0 },
+  { text: "Alles könnte zerfallen. Aber immerhin dreht sich der Ringkreis stabil.", uses: 0 },
+  { text: "In ein paar Milliarden Jahren ist die Sonne weg. Bis dahin: Wasser trinken.", uses: 0 },
+  { text: "Du bist Sternenstaub mit Questlog.", uses: 0 }
+];
+
+/* ===== Farben ===== */
+
+const dayColors = [
+  "#1a2540", "#172338", "#8f6b00",
+  "#9a6b00", "#4b3b13", "#0f3c4c"
+];
+
+const nightColors = [
+  "#e9f0ff", "#f4e9ff", "#ffe27a",
+  "#ffe9c7", "#dce8ff", "#f7f2ff"
+];
+
+function palette() {
+  return document.body.classList.contains("night") ? nightColors : dayColors;
+}
+
+function randomColor() {
+  const p = palette();
+  return p[Math.floor(Math.random() * p.length)];
+}
+
+/* ===== Weighted pick ===== */
+
+function weightedPick(list) {
+  let total = 0;
+  const weights = list.map(m => {
+    const w = 1 / (1 + m.uses);
+    total += w;
+    return w;
+  });
+
+  let r = Math.random() * total;
+  for (let i = 0; i < list.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return list[i];
+  }
+  return list[list.length - 1];
+}
+
+function pickMessage() {
+  const roll = Math.random();
+  let pool, type;
+
+  if (roll < 0.72) { pool = motivating; type = "motivating"; }
+  else if (roll < 0.95) { pool = funfacts; type = "fun"; }
+  else { pool = existential; type = "existential"; }
+
+  const obj = weightedPick(pool);
+  obj.uses++;
+  return { text: obj.text, type };
+}
+
+const companion = document.getElementById("companion");
+const msg = document.getElementById("message");
+const sparkle = document.querySelector(".sparkle");
+const toggle = document.getElementById("toggle-button");
+const gandalfButton = document.getElementById("gandalf-button");
+const gandalfOverlay = document.getElementById("gandalf-overlay");
+const gandalfClose = document.getElementById("gandalf-close");
+const gandalfVideo = document.getElementById("gandalf-video");
+const gandalfGif = document.getElementById("gandalf-gif");
+const gandalfAudio = document.getElementById("gandalf-audio");
+const gandalfNote = document.getElementById("gandalf-note");
+
+let existentialTimeout = null;
+
+function animateAdaNames() {
+  const names = msg.querySelectorAll(".ada-name");
+  names.forEach(el => {
+    el.classList.remove("ada-anim");
+    void el.offsetWidth;
+    el.classList.add("ada-anim");
+  });
+}
+
+function showMessage() {
+  const m = pickMessage();
+
+  if (m.type === "existential") {
+    document.body.classList.add("existential");
+    msg.classList.add("existential-message");
+
+    clearTimeout(existentialTimeout);
+    existentialTimeout = setTimeout(() => {
+      document.body.classList.remove("existential");
+      msg.classList.remove("existential-message");
+    }, 4000);
+  } else {
+    document.body.classList.remove("existential");
+    msg.classList.remove("existential-message");
+  }
+
+  msg.innerHTML = m.text;
+  msg.style.color = randomColor();
+  animateAdaNames();
+}
+
+showMessage();
+
+/* Idle */
+
+const idleClasses = ["idle-hop", "idle-wiggle", "idle-tilt"];
+
+function triggerIdle() {
+  const cls = idleClasses[Math.floor(Math.random() * idleClasses.length)];
+  companion.classList.add(cls);
+
+  if (Math.random() < 0.4) {
+    sparkle.classList.add("sparkle-on");
+    setTimeout(() => sparkle.classList.remove("sparkle-on"), 700);
+  }
+
+  setTimeout(() => {
+    companion.classList.remove(cls);
+    scheduleIdle();
+  }, 700);
+}
+
+function scheduleIdle() {
+  const delay = 2000 + Math.random() * 2500;
+  setTimeout(triggerIdle, delay);
+}
+
+scheduleIdle();
+
+/* Click */
+
+const clickClasses = ["click-bounce", "click-shake", "click-pop"];
+
+companion.addEventListener("click", () => {
+  const cls = clickClasses[Math.floor(Math.random() * clickClasses.length)];
+  companion.classList.add(cls);
+  setTimeout(() => companion.classList.remove(cls), 500);
+
+  showMessage();
+});
+
+/* Nightmode default */
+
+document.body.classList.add("night");
+
+toggle.addEventListener("click", () => {
+  const night = document.body.classList.toggle("night");
+  toggle.textContent = night ? "Tagmodus" : "Nachtmodus";
+  msg.style.color = randomColor();
+});
+
+/* Gandalf-Modus */
+
+function openGandalfMode() {
+  gandalfOverlay.classList.add("active");
+
+  /*
+    Standard: Video verwenden.
+    Wenn du lieber direkt ein GIF verwenden willst:
+    - die nächsten 5 Zeilen mit gandalfVideo auskommentieren
+    - und stattdessen gandalfGif.classList.add("active"); nutzen
+  */
+  gandalfGif.classList.remove("active");
+  gandalfVideo.classList.add("active");
+  gandalfVideo.currentTime = 0;
+  gandalfAudio.currentTime = 0;
+
+  const videoPromise = gandalfVideo.play();
+  const audioPromise = gandalfAudio.play();
+
+  if (videoPromise !== undefined) {
+    videoPromise
+      .then(() => {
+        gandalfNote.style.display = "none";
+      })
+      .catch(() => {
+        gandalfVideo.classList.remove("active");
+        gandalfGif.classList.add("active");
+        gandalfNote.style.display = "block";
+      });
+  }
+
+  if (audioPromise !== undefined) {
+    audioPromise.catch(() => {
+      gandalfNote.style.display = "block";
+      gandalfNote.textContent = "Musik konnte nicht gestartet werden. Prüfe, ob gandalf-music.mp3 im Ordner liegt.";
+    });
+  }
+}
+
+function closeGandalfMode() {
+  gandalfOverlay.classList.remove("active");
+  gandalfVideo.pause();
+  gandalfAudio.pause();
+  gandalfVideo.currentTime = 0;
+  gandalfAudio.currentTime = 0;
+  gandalfVideo.classList.remove("active");
+  gandalfGif.classList.remove("active");
+  gandalfNote.style.display = "none";
+  gandalfNote.textContent = "Lege später gandalf-mode.mp4/gif und gandalf-music.mp3 in den Projektordner.";
+}
+
+gandalfButton.addEventListener("click", openGandalfMode);
+gandalfClose.addEventListener("click", closeGandalfMode);
+
+gandalfOverlay.addEventListener("click", (event) => {
+  if (event.target === gandalfOverlay) {
+    closeGandalfMode();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeGandalfMode();
+  }
+});
+</script>
+</body>
+</html>
