@@ -498,7 +498,7 @@ const motivating = [
   { text: "Love Bombing!? Bare Minimum, würde ich sagen.", uses: 0 },
   { text: "Goldene Regel: Je lauter dein Motorrad, desto größer sind deine Eier", uses: 0 },
   { text: "#StayToxic. Aber liebevoll.", uses: 0 },
-  { text: "Du bist ein absoluter Hirnie. Aber Louis mag dich irgendwie trotzdem.", uses: 0 }
+  { text: "Du bist ein absoluter Hirnie. Aber Louis mag dich irgendwie trotzdem.", uses: 0 },
   { text: "Vielleicht ist unser Weg sinnlos. Vielleicht glitzert unterwegs aber auch ein wertvoller Ring.", uses: 0 },
   { text: "Nichts ist sicher. Außer, dass Transkripte nerven.", uses: 0 },
   { text: "Am Ende bleibt vielleicht nichts. Außer der offene Anspruch auf 1000 Brookies.", uses: 0 },
@@ -522,8 +522,7 @@ const motivating = [
   { text: "Was ich trinke!? Kaffee!? Mit Koffein!?", uses: 0 },
   { text: "Dude!?", uses: 0 },
   { text: "Mein Output verbraucht keine 10 Liter Wasser pro Prompt!", uses: 0 },
-  { text: "Wir wollen ihn, wir brauchen ihn, wir müssen ihn haben ... den Schatz!", uses: 0 },
-  
+  { text: "Wir wollen ihn, wir brauchen ihn, wir müssen ihn haben ... den Schatz!", uses: 0 },  
 ];
 
 
@@ -567,15 +566,9 @@ function weightedPick(list) {
 }
 
 function pickMessage() {
-  const roll = Math.random();
-  let pool, type;
-
-  if (roll < 0.33) { pool = motivating; type = "motivating"; }
-  
-
-  const obj = weightedPick(pool);
+  const obj = weightedPick(motivating);
   obj.uses++;
-  return { text: obj.text, type };
+  return { text: obj.text, type: "normal" };
 }
 
 const companion = document.getElementById("companion");
