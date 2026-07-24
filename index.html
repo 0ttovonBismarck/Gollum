@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title> Happy Birthday! <3 </title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --day-top: #4f7fd0;
+  --day-bottom: #68a3f2;
+
+  --night-top: #0f1630;
+  --night-bottom: #151d3a;
+
+  --day-text: #04121f;
+  --night-text: #e9f0ff;
+
+  --gold-light: #ffe27a;
+  --gold-main: #d6a900;
+  --gold-dark: #8f6b00;
+}
+
+/* ===== Global ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand", sans-serif;
+  background: linear-gradient(180deg, var(--day-top), var(--day-bottom));
+  transition: background 0.8s ease;
+}
+
+.wrapper {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+/* ===== Birthday Header und auch Konfetti ===== */
+
+.birthday-title {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 900;
+  pointer-events: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 4.2rem);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  padding: 8px 18px;
+  background: linear-gradient(90deg, #ffe27a, #ff7ab6, #7ad7ff, #9cff8f, #ffe27a);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  animation: birthday-gradient 6s ease-in-out infinite, birthday-float 3s ease-in-out infinite;
+}
+
+@keyframes birthday-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes birthday-float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(5px); }
+}
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: var(--size);
+  height: calc(var(--size) * 1.6);
+  background: var(--confetti-color);
+  opacity: 0.85;
+  border-radius: 2px;
+  animation: confetti-fall var(--fall-duration) linear infinite;
+  animation-delay: var(--fall-delay);
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate3d(var(--start-x), -10vh, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(calc(var(--start-x) + var(--drift)), 110vh, 0) rotate(720deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .birthday-title {
+    top: 18px;
+    font-size: clamp(1.7rem, 9vw, 2.7rem);
+    width: 95vw;
+  }
+
+  .confetti-piece {
+    opacity: 0.75;
+  }
+}
+
+
+/* Ringe um Gollum*/
+
+.ringcircle {
+  position: absolute;
+  width: 390px;
+  height: 390px;
+  top: calc(50% - 80px);
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: ring-spin 55s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ring-spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  border: 5px solid #d6a800;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    0 0 0 2px #8a6500,
+    0 0 6px rgba(255, 210, 60, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffe27a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.95);
+  line-height: 1;
+  user-select: none;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+}
+
+
+
+.ring:nth-child(1)  { transform: translate(-50%, -50%) rotate(0deg) translate(170px); }
+.ring:nth-child(2)  { transform: translate(-50%, -50%) rotate(22.5deg) translate(170px); }
+.ring:nth-child(3)  { transform: translate(-50%, -50%) rotate(45deg) translate(170px); }
+.ring:nth-child(4)  { transform: translate(-50%, -50%) rotate(67.5deg) translate(170px); }
+.ring:nth-child(5)  { transform: translate(-50%, -50%) rotate(90deg) translate(170px); }
+.ring:nth-child(6)  { transform: translate(-50%, -50%) rotate(112.5deg) translate(170px); }
+.ring:nth-child(7)  { transform: translate(-50%, -50%) rotate(135deg) translate(170px); }
+.ring:nth-child(8)  { transform: translate(-50%, -50%) rotate(157.5deg) translate(170px); }
+.ring:nth-child(9)  { transform: translate(-50%, -50%) rotate(180deg) translate(170px); }
+.ring:nth-child(10) { transform: translate(-50%, -50%) rotate(202.5deg) translate(170px); }
+.ring:nth-child(11) { transform: translate(-50%, -50%) rotate(225deg) translate(170px); }
+.ring:nth-child(12) { transform: translate(-50%, -50%) rotate(247.5deg) translate(170px); }
+.ring:nth-child(13) { transform: translate(-50%, -50%) rotate(270deg) translate(170px); }
+.ring:nth-child(14) { transform: translate(-50%, -50%) rotate(292.5deg) translate(170px); }
+.ring:nth-child(15) { transform: translate(-50%, -50%) rotate(315deg) translate(170px); }
+.ring:nth-child(16) { transform: translate(-50%, -50%) rotate(337.5deg) translate(170px); }
+
+/* Gollum */
+
+#companion {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  cursor: pointer;
+  transform-origin: center bottom;
+  animation: breathe 3s ease-in-out infinite;
+  z-index: 20;
+  margin-top: 40px;
+}
+
+#companion-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: filter 0.4s ease;
+}
+
+
+
+.companion-shadow {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 6px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(4px);
+  z-index: -1;
+}
+
+/* Animations */
+@keyframes breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-4px) scale(1); }
+}
+
+.sparkle {
+  position: absolute;
+  top: 8px;
+  right: -8px;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sparkle::before,
+.sparkle::after {
+  content: "";
+  position: absolute;
+  background: white;
+}
+
+.sparkle::before { width: 12px; height: 2px; top: 5px; left: 0; }
+.sparkle::after  { width: 2px; height: 12px; top: 0; left: 5px; }
+
+@keyframes sparkle-pop {
+  0%   { opacity: 0; transform: translateY(0) scale(0.4); }
+  10%  { opacity: 1; }
+  70%  { opacity: 1; transform: translateY(-8px) scale(1); }
+  100% { opacity: 0; transform: translateY(-14px) scale(0.3); }
+}
+
+/* Idle */
+@keyframes idle-hop {
+  0% { transform: translateY(0); }
+  30%{ transform: translateY(-14px); }
+  60%{ transform: translateY(4px); }
+  100%{ transform: translateY(0); }
+}
+@keyframes idle-wiggle {
+  0%,100%{ transform: rotate(0deg); }
+  25%{ transform: rotate(-4deg); }
+  50%{ transform: rotate(4deg); }
+  75%{ transform: rotate(-3deg); }
+}
+@keyframes idle-tilt {
+  0%{ transform: rotate(0deg); }
+  50%{ transform: rotate(-8deg); }
+  100%{ transform: rotate(0deg); }
+}
+
+.idle-hop    { animation: idle-hop 0.65s ease-out 1; }
+.idle-wiggle { animation: idle-wiggle 0.55s ease-out 1; }
+.idle-tilt   { animation: idle-tilt 0.55s ease-out 1; }
+
+/* Click */
+@keyframes click-bounce {
+  0%{ transform: translateY(0) scale(1); }
+  30%{ transform: translateY(-16px) scale(1.05); }
+  60%{ transform: translateY(4px) scale(0.95); }
+  100%{ transform: translateY(0) scale(1); }
+}
+@keyframes click-shake {
+  0%,100%{ transform: translateX(0) scale(1); }
+  20%{ transform: translateX(-6px); }
+  40%{ transform: translateX(6px); }
+  60%{ transform: translateX(-5px); }
+  80%{ transform: translateX(5px); }
+}
+@keyframes click-pop {
+  0%{ transform: scale(1); }
+  40%{ transform: scale(1.12); }
+  100%{ transform: scale(1); }
+}
+
+.click-bounce { animation: click-bounce 0.45s ease-out 1 !important; }
+.click-shake  { animation: click-shake 0.4s ease-out 1 !important; }
+.click-pop    { animation: click-pop 0.35s ease-out 1 !important; }
+
+.sparkle-on { animation: sparkle-pop 0.7s ease-out 1; }
+
+/* */
+
+#message {
+  margin-top: 100px;
+  max-width: 90vw;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--day-text);
+  transition: color 0.4s ease;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.25);
+  position: relative;
+  z-index: 30;
+}
+
+#message.initial-message {
+  color: #ffe27a !important;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.75),
+    0 0 14px rgba(255,226,122,0.65);
+}
+
+.ada-name { display: inline-block; }
+.ada-anim { animation: ada-pulse 0.5s ease-out 1; }
+@keyframes ada-pulse {
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.07); }
+  100%{ transform: scale(1); }
+}
+
+/* existential-mode */
+.existential-message { animation: existential-wiggle 1.4s ease-in-out infinite; }
+@keyframes existential-wiggle {
+  0%,100%{ transform: translateX(0); }
+  50%{ transform: translateX(2px); }
+}
+
+body.existential {
+  background: linear-gradient(180deg, #141425, #232348) !important;
+}
+
+body.existential #companion-img {
+  filter: hue-rotate(15deg) brightness(0.85);
+}
+
+/* ===== Night Mode ===== */
+
+body.night {
+  background: linear-gradient(180deg, var(--night-top), var(--night-bottom));
+}
+
+body.night #message {
+  color: var(--night-text);
+}
+
+/* ===== Buttons ===== */
+
+.toggle,
+.gandalf-button {
+  position: fixed;
+  background: #ffffffaa;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  user-select: none;
+  z-index: 2;
+}
+
+.toggle {
+  bottom: 20px;
+  right: 20px;
+}
+
+.gandalf-button {
+  bottom: 20px;
+  left: 20px;
+}
+
+body.night .toggle,
+body.night .gandalf-button {
+  background: #00000055;
+  color: #f0f3ff;
+}
+
+/* Gandalf Modus*/
+
+#gandalf-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+
+#gandalf-overlay.active {
+  display: flex;
+}
+
+#gandalf-video,
+#gandalf-gif {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: none;
+}
+
+#gandalf-video.active,
+#gandalf-gif.active {
+  display: block;
+}
+
+#gandalf-close {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 5010;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.78);
+  color: #111;
+}
+
+
+/* ===== Start-Popup / persönlicher Brief ===== */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top, rgba(255, 226, 122, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(8, 10, 25, 0.96), rgba(0, 0, 0, 0.94));
+  color: #f7f2ff;
+}
+
+.intro-overlay.hidden {
+  display: none;
+}
+
+.intro-card {
+  width: min(680px, 94vw);
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 28px 30px 26px;
+  border-radius: 24px;
+  background: rgba(15, 22, 48, 0.92);
+  border: 1px solid rgba(255, 226, 122, 0.45);
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(214, 169, 0, 0.22);
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+
+.intro-card h1 {
+  margin: 0 0 28px;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  line-height: 1.05;
+  background: linear-gradient(90deg, #ffe27a, #ff7ab6, #7ad7ff, #9cff8f, #ffe27a);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: birthday-gradient 6s ease-in-out infinite;
+}
+
+.intro-card p {
+  margin: 0 0 13px;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.intro-signature {
+  margin-top: 28px !important;
+  margin-bottom: 24px !important;
+}
+
+.intro-button {
+  display: block;
+  margin: 20px auto 0;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111;
+  background: linear-gradient(90deg, #ffe27a, #ffb347, #ff7ab6);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+}
+
+.intro-button:hover {
+  transform: translateY(-1px);
+}
+
+
+.side-hint {
+  position: fixed;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 850;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: rgba(233, 240, 255, 0.9);
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.18;
+  text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.side-hint-arrow {
+  font-size: 1.8rem;
+  line-height: 1;
+  animation: side-arrow-nudge 1.4s ease-in-out infinite;
+}
+
+@keyframes side-arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+
+body:not(.night) .side-hint {
+  background: rgba(255, 255, 255, 0.55);
+  color: rgba(4, 18, 31, 0.85);
+}
+
+body.heart-complete .side-hint {
+  opacity: 0;
+  transform: translateY(-50%) translateX(-18px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+@media (max-width: 700px) {
+  .side-hint {
+    display: none;
+  }
+
+  #companion {
+    margin-top: 18px;
+  }
+
+  #message {
+    margin-top: 55px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    max-width: 92vw;
+  }
+}
+
+.ring {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.ring:hover {
+  filter: brightness(1.25) drop-shadow(0 0 5px rgba(255, 226, 122, 0.85));
+}
+
+.ring.ring-played {
+  animation: ring-played-glow 0.45s ease-out 1;
+}
+
+.ring.ring-activated {
+  border-color: #dce8ff;
+  box-shadow:
+    0 0 0 2px #8ca7c7,
+    0 0 10px rgba(122, 215, 255, 0.85),
+    0 0 22px rgba(122, 215, 255, 0.45);
+  filter: brightness(1.25);
+}
+
+.ringcircle.heart-formed {
+  animation: none;
+  transform: translate(-50%, -50%) rotate(0deg) !important;
+}
+
+.ringcircle.heart-formed .heart-line {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.heart-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 390px;
+  height: 390px;
+  transform: translate(-50%, -50%) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.9s ease, transform 1.1s ease;
+  filter:
+    drop-shadow(0 0 8px rgba(122, 215, 255, 0.85))
+    drop-shadow(0 0 18px rgba(122, 215, 255, 0.45));
+}
+
+.heart-line path {
+  fill: rgba(122, 215, 255, 0.035);
+  stroke: rgba(185, 231, 255, 0.97);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1100;
+  stroke-dashoffset: 1100;
+}
+
+.ringcircle.heart-formed .heart-line path {
+  animation: draw-heart-line 1.25s ease-out forwards;
+}
+
+.ringcircle.heart-formed .ring {
+  transition: transform 1.1s ease-in-out, border-color 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+  z-index: 2;
+}
+
+/* Herzpunkte: bewusst auf derselben Linie wie das SVG. So liegen Ringe und Leuchtlinie sauber übereinander. */
+.ringcircle.heart-formed .ring:nth-child(1)  { transform: translate(-50%, -50%) translate(-132px, -28px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(2)  { transform: translate(-50%, -50%) translate(-128px, -82px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(3)  { transform: translate(-50%, -50%) translate(-92px, -124px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(4)  { transform: translate(-50%, -50%) translate(-46px, -124px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(5)  { transform: translate(-50%, -50%) translate(0px, -96px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(6)  { transform: translate(-50%, -50%) translate(46px, -124px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(7)  { transform: translate(-50%, -50%) translate(92px, -124px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(8)  { transform: translate(-50%, -50%) translate(128px, -82px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(9)  { transform: translate(-50%, -50%) translate(132px, -28px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(10) { transform: translate(-50%, -50%) translate(108px, 30px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(11) { transform: translate(-50%, -50%) translate(74px, 78px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(12) { transform: translate(-50%, -50%) translate(36px, 118px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(13) { transform: translate(-50%, -50%) translate(0px, 150px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(14) { transform: translate(-50%, -50%) translate(-36px, 118px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(15) { transform: translate(-50%, -50%) translate(-74px, 78px) scale(1.04); }
+.ringcircle.heart-formed .ring:nth-child(16) { transform: translate(-50%, -50%) translate(-108px, 30px) scale(1.04); }
+
+@keyframes draw-heart-line {
+  to { stroke-dashoffset: 0; }
+}
+
+.brookie-heart-message {
+  color: #b9e7ff !important;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.75),
+    0 0 14px rgba(122, 215, 255, 0.75);
+}
+
+
+@keyframes ring-played-glow {
+  0%   { filter: brightness(1); }
+  45%  { filter: brightness(1.8) drop-shadow(0 0 10px rgba(122, 215, 255, 0.95)); }
+  100% { filter: brightness(1); }
+}
+
+@media (max-width: 600px) {
+  .intro-card {
+    padding: 24px 22px 22px;
+  }
+
+  .intro-card p {
+    font-size: 0.98rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="intro-overlay" id="intro-overlay">
+  <div class="intro-card">
+    <h1>Liebste Adda,</h1>
+
+    <p>
+      Ich hoffe, du verbringst einen wundervollen Geburtstag! Ich wünsche dir alles Gute und nutze die Gelegenheit,
+      dir zu zeigen, wie sehr ich unsere gemeinsame Zeit schätze. Stunden fühlen sich mit dir wie Minuten an,
+      weshalb ich ein paar Erinnerungen gesammelt habe, um sie vor der Flüchtigkeit der Zeit zu schützen.
+    </p>
+
+    <p>
+      Ich hoffe, du genießt schöne Stunden und diese digitale Geburtstagskarte, angelehnt an dein Nerd-Gebiet, lässt dich in ein paar schönen Erinnerungen
+      schwelgen, motiviert dich, wenn es tausend Gründe zum Quengeln gibt, und bringt dich hoffentlich ein wenig zum Lachen ...
+    </p>
+
+    <p class="intro-signature">XOXO <br> Looouuuuis</p>
+
+    <p>
+      
+    </p>
+
+    <button class="intro-button" id="intro-close">Los geht's</button>
+  </div>
+</div>
+
+<div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+<div class="birthday-title">Happy Birthday, Ada!</div>
+<div class="side-hint" aria-hidden="true">
+  <span>Tipp auf Gollum<br>oder die Ringe! :)</span>
+  <span class="side-hint-arrow">→</span>
+</div>
+
+<div class="gandalf-button" id="gandalf-button">Gandalf-Modus</div>
+<div class="toggle" id="toggle-button">Tagmodus</div>
+
+<div id="gandalf-overlay">
+  <button id="gandalf-close">✕</button>
+
+ 
+  <video id="gandalf-video" src="gandalf-mode.mp4" loop playsinline muted></video>
+  <img id="gandalf-gif" src="gandalf-mode.gif" alt="Gandalf-Modus">
+  <audio id="gandalf-audio" src="gandalf-music.mp3" loop preload="auto"></audio>
+</div>
+
+<div class="wrapper">
+
+  
+  <div class="ringcircle">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <svg class="heart-line" viewBox="0 0 390 390" aria-hidden="true">
+      <path d="M 63 167 L 67 113 L 103 71 L 149 71 L 195 99 L 241 71 L 287 71 L 323 113 L 327 167 L 303 225 L 269 273 L 231 313 L 195 345 L 159 313 L 121 273 L 87 225 Z"></path>
+    </svg>
+  </div>
+
+  <!-- Companion -->
+  <div id="companion">
+    <img id="companion-img" src="gollum.png" alt="Ada's Ring Companion">
+    <div class="companion-shadow"></div>
+    <div class="sparkle"></div>
+  </div>
+
+  <!-- Text -->
+  <div id="message"></div>
+</div>
+
+<script>
+/* ===== Sprüche ===== */
+
+const motivating = [
+  { text: "<span class='ada-name'>Ada</span>, falls du es vergessen hast: Du bist phänomenal!", uses: 0 },
+  { text: "Alles viel gerade!? Wie eine weise Frau mir einst vorschlug: Step by Step!", uses: 0 },
+  { text: "Eine weise Frau blickte einst zu den Sternen und sagte: Jedes Mal, wenn ich ein Flugzeug sehe ... Uiiiiiiiii", uses: 0 },
+  { text: "Mein Schatz!", uses: 0 },
+  { text: "My Precious!", uses: 0 },
+  { text: "Meu Precioso!", uses: 0 },
+  { text: "Der Boden deiner Dozentin ist mit Legosteinen bedeckt ...", uses: 0 },
+  { text: "Du bist nicht verloren. Du bist gerade nur in einer etwas längeren Sidequest.", uses: 0 },
+  { text: "Möge dein Kaffee stark und dein Tag kurz sein.", uses: 0 },
+  { text: "Geweint haben wir, mein Schatz. Geweint, weil wir so alleine waren. Und wir haben vergessen, wie Brot schmeckt, wie Bäume flüstern, wie der Wind streichelt, sogar unseren Namen haben wir vergessen… alles, wegen der Bachelorarbeit!", uses: 0 },
+  { text: "Denk daran, wie nocet das Leben eigentlich ist.", uses: 0 },
+  { text: "Nichts kann dich aufhalten, nicht einmal Fructose!", uses: 0 },
+  { text: "Sollte es dir mal wirklich schlecht gehen, bedenke: Du kannst Holz wenigstens gerade abschneiden. Bei anderen sieht das aus wie auf Gehrung geschnitten.", uses: 0 },
+  { text: "Manchmal ist Atmen produktiv genug.", uses: 0 },
+  { text: "Vergiss nicht, dass du eine absolute Macherin bist!", uses: 0 },
+  { text: "Es liegt hinter den Sternen und unterm Gestein, rieselt in alle Höhlen hinein. Kommt zuerst und folgt auch zuletzt, löscht alles Leben, bis keiner mehr schwätzt. Die Bachelorarbeit!", uses: 0 },
+  { text: "Manchen Leuten kann man es nicht recht machen. Die ignorieren sogar ein Herz auf den Brookies!", uses: 0 },
+  { text: "Eine Bachelorarbeit schreibt sich leider nicht von alleine. Unverschämt eigentlich.", uses: 0 },
+  { text: "Du bist 50 Prozent antriebslos und undiszipliniert, 50 Prozent perfektionistischer Dickschädel, aber trotzdem 100 Prozent liebenswert <3  ", uses: 0 },
+  { text: "Es sind viele Interviews, aber du schaffst das ... !", uses: 0 },
+  { text: "Nicht am Transkribieren verzweifeln. Erst fluchen, dann weitermachen.", uses: 0 },
+  { text: "Spanisch transkribieren, obwohl man Spanisch nicht kann? Auf so eine Idee würde keiner kommen, oder?", uses: 0 },
+  { text: "Hat nichts mit deinem Heimatort zu tun, aber ich Valley'n wenig für deinen Charme <3", uses: 0 },
+  { text: "Querer es poder <3", uses: 0 },
+  { text: "Wo ein Wille ist, ist auch ein Weg. Und manchmal ist der Weg einfach ein sehr langes Transkript und man braucht einen sehr starken Willen.", uses: 0 },
+  { text: "Die Lösung zu jedem Problem ist Kaffee, oder Brookies!", uses: 0 },
+  { text: "Üb' lieber mal deine Pistol Squats. Ich beobachte das.", uses: 0 },
+  { text: "Sag falls du Zeit hast, ins Easyfitness am Bahnhof einzubrechen ... die haben Videos von Louis' Handstand!", uses: 0 },
+  { text: "Vergiss nicht: Zuhause wartet immer ein fürchterlich furzender Hund auf dich.", uses: 0 },
+  { text: "Fructose ist eh scheiße. Macht also nichts.", uses: 0 },
+  { text: "Ein Wort und es gibt wieder Brookies.", uses: 0 },
+  { text: "Dein Leben fängt gerade erst an!", uses: 0 },
+  { text: "1000 Brookies wurden versprochen. Ich habe das nicht vergessen.", uses: 0 },
+  { text: "Diese Seite zu schreiben war Bare Minimum.", uses: 0 },
+  { text: "Love Bombing!? Bare Minimum, würde ich sagen.", uses: 0 },
+  { text: "Goldene Regel: Je lauter dein Motorrad, desto größer sind deine Eier", uses: 0 },
+  { text: "#StayToxic. Aber liebevoll.", uses: 0 },
+  { text: "Du bist ein absoluter Hirnie. Aber Louis mag dich irgendwie trotzdem.", uses: 0 },
+  { text: "Vielleicht ist unser Weg sinnlos. Vielleicht glitzert unterwegs aber auch ein wertvoller Ring.", uses: 0 },
+  { text: "Nichts ist sicher. Außer, dass Transkripte nerven.", uses: 0 },
+  { text: "Am Ende bleibt vielleicht nichts. Außer der offene Anspruch auf 1000 Brookies.", uses: 0 },
+  { text: "Alles ist vergänglich. Auch Bachelorarbeiten. Hoffentlich.", uses: 0 },
+  { text: "Männer sind scheiße. Aber Louis versucht, nicht ganz so scheiße zu sein.", uses: 0 },
+  { text: "Wenn du am Boden bist: Denk daran, dass du wenigstens kein stinkender Informatiker bist", uses: 0 },
+  { text: "Si puedes traducir esto, lo de las entrevistas no debe de ser tan difícil", uses: 0 },
+  { text: "No te lo vas a creer: ¡Louis cree en ti!", uses: 0 },
+  { text: "Diese Seite zu coden war die Definition von #Alpha!", uses: 0 },
+  { text: "Absolutes FARBFERNSEHEN", uses: 0 },
+  { text: "Wie ein weiser Mann im BoGa einst sagte: „Fickt mich ihr Hurensöhne! Egal womit.“", uses: 0 },
+  { text: "Fun Fact: Louis programmierte mich, anstatt sein Zimmer aufzuräumen ...", uses: 0 },
+  { text: "Wie die Bayern sagen würden: Louis findet, ihr beide habt eine gute Kemie.", uses: 0 },
+  { text: "Fun Fact: Das Angebot mit dem verschwitzten Handtuch steht immer noch.", uses: 0 },
+  { text: "Eine Prise ist keine gute Metrik!", uses: 0 },
+  { text: "Stell dir vor, deine Handschrift ist so schön, dass sie maschinell erstellt wirkt. Würde mir stinken.", uses: 0 },
+  { text: "Nicht für ein Plakat gelobt zu werden, obwohl es schön und selbstgemacht war, ist objektiv frech. #NeverForget", uses: 0 },
+  { text: "Maschinell schöne Handschrift ist auch ein Talent. Nur offenbar schwer zu würdigen.", uses: 0 },
+  { text: "Stell dir vor, wie stolz du dieses Bachelorzeugnis halten wirst!", uses: 0 },
+  { text: "Wenn es dir schlecht geht, hat Louis immer einen seiner Raps parat", uses: 0 },
+  { text: "Was ich trinke!? Kaffee!? Mit Koffein!?", uses: 0 },
+  { text: "Dude!?", uses: 0 },
+  { text: "Ich würde mein Zeit lieber koksend am Edersee verbringen ...", uses: 0 },
+  { text: "Mein Output verbraucht keine 10 Liter Wasser pro Prompt!", uses: 0 },
+  { text: "Mit Verlaub, man kann auch dreimal gute Nacht sagen und trotzdem weiterschreiben.", uses: 0 },
+  { text: "Wir wollen ihn, wir brauchen ihn, wir müssen ihn haben ... den Schatz!", uses: 0 },  
+];
+
+
+/* ===== Farben ===== */
+
+const dayColors = [
+  "#1a2540", "#172338", "#8f6b00",
+  "#9a6b00", "#4b3b13", "#0f3c4c"
+];
+
+const nightColors = [
+  "#e9f0ff", "#f4e9ff", "#ffe27a",
+  "#ffe9c7", "#dce8ff", "#f7f2ff"
+];
+
+function palette() {
+  return document.body.classList.contains("night") ? nightColors : dayColors;
+}
+
+function randomColor() {
+  const p = palette();
+  return p[Math.floor(Math.random() * p.length)];
+}
+
+/* ===== Weighted pick ===== */
+
+function weightedPick(list) {
+  let total = 0;
+  const weights = list.map(m => {
+    const w = 1 / Math.pow(1 + m.uses, 4);
+    total += w;
+    return w;
+  });
+
+  let r = Math.random() * total;
+  for (let i = 0; i < list.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return list[i];
+  }
+  return list[list.length - 1];
+}
+
+function pickMessage() {
+  const obj = weightedPick(motivating);
+  obj.uses++;
+  return { text: obj.text, type: "normal" };
+}
+
+const companion = document.getElementById("companion");
+const msg = document.getElementById("message");
+const sparkle = document.querySelector(".sparkle");
+const toggle = document.getElementById("toggle-button");
+const gandalfButton = document.getElementById("gandalf-button");
+const gandalfOverlay = document.getElementById("gandalf-overlay");
+const gandalfClose = document.getElementById("gandalf-close");
+const gandalfVideo = document.getElementById("gandalf-video");
+const gandalfGif = document.getElementById("gandalf-gif");
+const gandalfAudio = document.getElementById("gandalf-audio");
+const introOverlay = document.getElementById("intro-overlay");
+const introClose = document.getElementById("intro-close");
+const rings = document.querySelectorAll(".ring");
+const ringCircle = document.querySelector(".ringcircle");
+
+const confettiContainer = document.getElementById("confetti-container");
+
+function createConfetti() {
+  const colors = [
+    "#ffe27a", "#ff7ab6", "#7ad7ff",
+    "#9cff8f", "#ffffff", "#d6a900"
+  ];
+
+  for (let i = 0; i < 75; i++) {
+    const piece = document.createElement("div");
+    piece.classList.add("confetti-piece");
+
+    const size = 6 + Math.random() * 8;
+    const startX = Math.random() * 100;
+    const drift = -25 + Math.random() * 50;
+    const duration = 7 + Math.random() * 7;
+    const delay = -Math.random() * duration;
+
+    piece.style.setProperty("--size", `${size}px`);
+    piece.style.setProperty("--start-x", `${startX}vw`);
+    piece.style.setProperty("--drift", `${drift}vw`);
+    piece.style.setProperty("--fall-duration", `${duration}s`);
+    piece.style.setProperty("--fall-delay", `${delay}s`);
+    piece.style.setProperty("--confetti-color", colors[Math.floor(Math.random() * colors.length)]);
+
+    if (Math.random() < 0.35) {
+      piece.style.borderRadius = "50%";
+    }
+
+    confettiContainer.appendChild(piece);
+  }
+}
+
+createConfetti();
+
+
+let existentialTimeout = null;
+
+function animateAdaNames() {
+  const names = msg.querySelectorAll(".ada-name");
+  names.forEach(el => {
+    el.classList.remove("ada-anim");
+    void el.offsetWidth;
+    el.classList.add("ada-anim");
+  });
+}
+
+function showMessage() {
+  msg.classList.remove("initial-message");
+  msg.classList.remove("brookie-heart-message");
+  const m = pickMessage();
+
+  if (m.type === "existential") {
+    document.body.classList.add("existential");
+    msg.classList.add("existential-message");
+
+    clearTimeout(existentialTimeout);
+    existentialTimeout = setTimeout(() => {
+      document.body.classList.remove("existential");
+      msg.classList.remove("existential-message");
+    }, 4000);
+  } else {
+    document.body.classList.remove("existential");
+    msg.classList.remove("existential-message");
+  }
+
+  msg.innerHTML = m.text;
+  msg.style.color = randomColor();
+  animateAdaNames();
+}
+
+function showInitialMessage() {
+  msg.classList.remove("brookie-heart-message");
+  msg.classList.add("initial-message");
+  msg.innerHTML = " <br><br><br>Eine kleine digitale Sammlung von schönen Erinnerungen, <br> blöden Witzen und ein klein wenig Support <br>(Nicht, dass ich hauptberuflich dein Cheerleader wäre ...) <br><br>Gollum und die Ringe warten übrigens darauf, angetippt zu werden.<br><br>Ich hoffe es gefällt dir!";
+  msg.style.color = "#ffe27a";
+  animateAdaNames();
+}
+
+showInitialMessage();
+
+introClose.addEventListener("click", () => {
+  introOverlay.classList.add("hidden");
+});
+
+
+let ringAudioContext = null;
+
+function getRingAudioContext() {
+  if (!ringAudioContext) {
+    ringAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return ringAudioContext;
+}
+
+function noteToFrequency(note) {
+  const match = note.match(/^([A-G])([b#]?)(-?\d)$/);
+  if (!match) return 440;
+
+  const noteName = match[1] + match[2];
+  const octave = Number(match[3]);
+  const semitones = {
+    C: -9, "C#": -8, Db: -8,
+    D: -7, "D#": -6, Eb: -6,
+    E: -5,
+    F: -4, "F#": -3, Gb: -3,
+    G: -2, "G#": -1, Ab: -1,
+    A: 0, "A#": 1, Bb: 1,
+    B: 2
+  };
+
+  return 440 * Math.pow(2, (semitones[noteName] + 12 * (octave - 4)) / 12);
+}
+
+function playRingChord(notes) {
+  const ctx = getRingAudioContext();
+  const now = ctx.currentTime;
+
+  notes.forEach((note, index) => {
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.type = index === 0 ? "triangle" : "sine";
+    oscillator.frequency.setValueAtTime(noteToFrequency(note), now);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.10, now + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 1.2);
+  });
+}
+
+const ringChords = [
+  ["D3", "A3", "D4", "F4"],
+  ["D3", "Bb3", "D4", "F4"],
+  ["Bb2", "F3", "Bb3", "D4"],
+  ["G2", "D3", "G3", "Bb3"],
+  ["D3", "A3", "D4", "F4"],
+  ["F3", "Bb3", "Db4", "F4"],
+  ["Eb3", "Bb3", "Eb4", "Gb4"],
+  ["D3", "A3", "D4", "F4"],
+  ["D3", "A3", "D4", "F4"],
+  ["D3", "Bb3", "D4", "F4"],
+  ["Bb2", "F3", "Bb3", "D4"],
+  ["G2", "D3", "G3", "Bb3"],
+  ["D3", "A3", "D4", "F4"],
+  ["F3", "Bb3", "Db4", "F4"],
+  ["Eb3", "Bb3", "Eb4", "Gb4"],
+  ["D3", "A3", "D4", "F4"]
+];
+
+const activatedRings = new Set();
+let ringHeartFormed = false;
+
+function showBrookieHeartMessage() {
+  msg.classList.remove("initial-message");
+  msg.classList.remove("existential-message");
+  msg.classList.add("brookie-heart-message");
+  document.body.classList.remove("existential");
+  msg.innerHTML = "So sah übrigens das Herz auf den Brookies aus ...";
+  msg.style.color = "#b9e7ff";
+}
+
+function checkRingHeart() {
+  if (ringHeartFormed || activatedRings.size < rings.length) return;
+
+  ringHeartFormed = true;
+  ringCircle.classList.add("heart-formed");
+  document.body.classList.add("heart-complete");
+  showBrookieHeartMessage();
+}
+
+rings.forEach((ring, index) => {
+  ring.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    playRingChord(ringChords[index]);
+
+    activatedRings.add(index);
+    ring.classList.add("ring-activated");
+
+    ring.classList.remove("ring-played");
+    void ring.offsetWidth;
+    ring.classList.add("ring-played");
+    setTimeout(() => ring.classList.remove("ring-played"), 500);
+
+    checkRingHeart();
+  });
+});
+
+/* Idle */
+
+const idleClasses = ["idle-hop", "idle-wiggle", "idle-tilt"];
+
+function triggerIdle() {
+  const cls = idleClasses[Math.floor(Math.random() * idleClasses.length)];
+  companion.classList.add(cls);
+
+  if (Math.random() < 0.4) {
+    sparkle.classList.add("sparkle-on");
+    setTimeout(() => sparkle.classList.remove("sparkle-on"), 700);
+  }
+
+  setTimeout(() => {
+    companion.classList.remove(cls);
+    scheduleIdle();
+  }, 700);
+}
+
+function scheduleIdle() {
+  const delay = 2000 + Math.random() * 2500;
+  setTimeout(triggerIdle, delay);
+}
+
+scheduleIdle();
+
+/* Click */
+
+const clickClasses = ["click-bounce", "click-shake", "click-pop"];
+
+companion.addEventListener("click", () => {
+  const cls = clickClasses[Math.floor(Math.random() * clickClasses.length)];
+  companion.classList.add(cls);
+  setTimeout(() => companion.classList.remove(cls), 500);
+
+  showMessage();
+});
+
+/* Nightmode default */
+
+document.body.classList.add("night");
+
+toggle.addEventListener("click", () => {
+  const night = document.body.classList.toggle("night");
+  toggle.textContent = night ? "Tagmodus" : "Nachtmodus";
+  msg.style.color = randomColor();
+});
+
+/* Gandalf-Modus */
+
+function openGandalfMode() {
+  gandalfOverlay.classList.add("active");
+
+  gandalfGif.classList.remove("active");
+  gandalfVideo.classList.add("active");
+  gandalfVideo.currentTime = 0;
+  gandalfAudio.currentTime = 0;
+
+  const videoPromise = gandalfVideo.play();
+  const audioPromise = gandalfAudio.play();
+
+  if (videoPromise !== undefined) {
+    videoPromise.catch(() => {
+      gandalfVideo.classList.remove("active");
+      gandalfGif.classList.add("active");
+    });
+  }
+
+  if (audioPromise !== undefined) {
+    audioPromise.catch(() => {
+      // Musik konnte nicht abgespielt werden. Das Overlay läuft trotzdem weiter.
+    });
+  }
+}
+
+function closeGandalfMode() {
+  gandalfOverlay.classList.remove("active");
+  gandalfVideo.pause();
+  gandalfAudio.pause();
+  gandalfVideo.currentTime = 0;
+  gandalfAudio.currentTime = 0;
+  gandalfVideo.classList.remove("active");
+  gandalfGif.classList.remove("active");
+  
+}
+
+gandalfButton.addEventListener("click", openGandalfMode);
+gandalfClose.addEventListener("click", closeGandalfMode);
+
+gandalfOverlay.addEventListener("click", (event) => {
+  if (event.target === gandalfOverlay) {
+    closeGandalfMode();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeGandalfMode();
+  }
+});
+</script>
+</body>
+</html>
